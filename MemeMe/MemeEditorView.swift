@@ -26,14 +26,8 @@ class MemeEditorView: UIView {
     @IBOutlet weak var imageView: UIImageView!
     
     func initTextFields() {
-        let memeTextAttributes = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
-            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : -1
-        ]
-        initTextField(topTextField, defaultTextAttributes: memeTextAttributes)
-        initTextField(bottomTextField, defaultTextAttributes: memeTextAttributes)
+        initTextField(topTextField)
+        initTextField(bottomTextField)
     }
     
     func isBottomTextFieldBeingEditing() -> Bool {
@@ -56,6 +50,20 @@ class MemeEditorView: UIView {
         return memedImage
     }
     
+    func updateFont(font: String) {
+        let memeTextAttributes = [
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont(name: font, size: 40)!,
+            NSStrokeWidthAttributeName : -1
+        ]
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
+    }
+    
     func setInitialState() {
         resetTextFields()
         imageView.image = nil
@@ -72,10 +80,8 @@ class MemeEditorView: UIView {
         bottomTextField.text = "BOTTOM"
     }
     
-    private func initTextField(textField: UITextField, defaultTextAttributes: [String : AnyObject]) {
-        textField.defaultTextAttributes = defaultTextAttributes
+    private func initTextField(textField: UITextField) {
         textField.textAlignment = .Center
-        
         textField.delegate = self
     }
     

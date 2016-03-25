@@ -18,11 +18,17 @@ class MemeEditorController: UIViewController, UINavigationControllerDelegate {
         memeEditorView.setInitialState()
         memeEditorView.initTextFields()
         subscribeToKeyboardNotifications()
+        
+        //add long press gesture
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MemeEditorController.showFontPickerView(_:)))
+        longPressGestureRecognizer.numberOfTapsRequired = 1
+        memeEditorView.imageView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         memeEditorView.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        memeEditorView.updateFont(MemeMeAPI.sharedInstance.getFont())
     }
     
     deinit {
@@ -47,6 +53,11 @@ class MemeEditorController: UIViewController, UINavigationControllerDelegate {
             MemeMeAPI.sharedInstance.saveImage(Meme(topText: self.memeEditorView.topTextField.text!, bottomText: self.memeEditorView.bottomTextField.text!, originalImage: self.memeEditorView.imageView.image!, memedImage: memedImage))
         })
     }
+    func showFontPickerView(sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.Began {
+            performSegueWithIdentifier("changeFontSegue", sender: nil)
+        }
+    }
     
     // MARK: Keyboard notifications
     
@@ -64,8 +75,8 @@ class MemeEditorController: UIViewController, UINavigationControllerDelegate {
     }
     
     private func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     private func unsubscribeKeyboardNotifications() {

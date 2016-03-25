@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="slc-fA-bbn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="slc-fA-bbn">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -18,6 +18,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jaR-Xg-x6v">
+                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="tMx-Ff-G3D" appends="YES" id="5Lg-1a-dDS"/>
+                                </connections>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GjF-ZB-Dxb">
+                                <rect key="frame" x="0.0" y="518" width="600" height="17"/>
+                                <gestureRecognizers/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HWI-EL-xIT">
+                                <rect key="frame" x="0.0" y="83" width="600" height="24"/>
+                                <gestureRecognizers/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJQ-l3-gQy">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
@@ -28,7 +49,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="W1r-jO-xha"/>
-                                    <barButtonItem title="Pick image" id="cEG-45-8bf">
+                                    <barButtonItem title="Album" id="cEG-45-8bf">
                                         <connections>
                                             <action selector="pickImage:" destination="BYZ-38-t0r" id="sNz-HX-Kdn"/>
                                         </connections>
@@ -36,21 +57,6 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2uq-OO-6Fw"/>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jaR-Xg-x6v">
-                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
-                            </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GjF-ZB-Dxb">
-                                <rect key="frame" x="0.0" y="518" width="600" height="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HWI-EL-xIT">
-                                <rect key="frame" x="0.0" y="83" width="600" height="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -92,11 +98,81 @@
                     </navigationItem>
                     <connections>
                         <outlet property="memeEditorView" destination="8bC-Xf-vdC" id="Bub-9P-EuU"/>
+                        <segue destination="jD4-Kf-MCj" kind="show" identifier="changeFontSegue" id="8bm-7F-gNi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="tMx-Ff-G3D">
+                    <connections>
+                        <action selector="showFontPickerView:" destination="BYZ-38-t0r" id="QwZ-jY-z2b"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1253" y="458"/>
+            <point key="canvasLocation" x="1169" y="458"/>
+        </scene>
+        <!--Select font-->
+        <scene sceneID="25b-BC-tEL">
+            <objects>
+                <viewController id="jD4-Kf-MCj" customClass="FontPickerViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UJp-Tf-jWg"/>
+                        <viewControllerLayoutGuide type="bottom" id="cdP-7B-UxI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pOd-EX-cbq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Idq-sT-s8f">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="fontCell" rowHeight="65" id="vd7-3Z-avE" customClass="FontCellView" customModule="MemeMe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="65"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vd7-3Z-avE" id="D46-WZ-zDy">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="64.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rgK-tG-DdC" userLabel="fontPreview">
+                                                    <rect key="frame" x="8" y="24" width="584" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rgK-tG-DdC" secondAttribute="trailing" id="M8A-83-IDB"/>
+                                                <constraint firstItem="rgK-tG-DdC" firstAttribute="centerY" secondItem="D46-WZ-zDy" secondAttribute="centerY" id="mK9-sJ-dg1"/>
+                                                <constraint firstItem="rgK-tG-DdC" firstAttribute="leading" secondItem="D46-WZ-zDy" secondAttribute="leadingMargin" id="xsb-1r-Q0z"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="fontPreviewTextField" destination="rgK-tG-DdC" id="Iqg-bC-o1t"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZYP-sr-rkc" id="f0Q-Lr-9hy"/>
+                                    <outlet property="delegate" destination="ZYP-sr-rkc" id="NSH-bS-9fN"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cdP-7B-UxI" firstAttribute="top" secondItem="Idq-sT-s8f" secondAttribute="bottom" id="2Wq-Yg-nWT"/>
+                            <constraint firstItem="Idq-sT-s8f" firstAttribute="leading" secondItem="pOd-EX-cbq" secondAttribute="leadingMargin" constant="-20" id="RuH-Ap-4eK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Idq-sT-s8f" secondAttribute="trailing" constant="-20" id="ka7-Cf-Kco"/>
+                            <constraint firstItem="Idq-sT-s8f" firstAttribute="top" secondItem="UJp-Tf-jWg" secondAttribute="bottom" constant="-64" id="sAH-xK-c7Z"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Select font" id="NLn-si-vXo"/>
+                    <connections>
+                        <outlet property="fontPickerTableViewDelegates" destination="ZYP-sr-rkc" id="Yfq-EM-R2F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lfQ-M6-VD7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="ZYP-sr-rkc" customClass="FontPickerTableViewDelegates" customModule="MemeMe" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="837" y="1297"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dVG-Jh-zyx">
