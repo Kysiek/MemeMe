@@ -101,7 +101,9 @@ class MemeEditorView: UIView {
 }
 extension MemeEditorView: UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
-        textField.text = ""
+        if textField == "TOP" || textField == "BOTTOM" {
+            textField.text = ""
+        }
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()

@@ -63,15 +63,12 @@ class MemeEditorController: UIViewController, UINavigationControllerDelegate {
     
     func keyboardWillShow(notification: NSNotification) {
         if memeEditorView.isBottomTextFieldBeingEditing() {
-            memeEditorView.frame.origin.y -= getKeyboardHeight(notification)
+            memeEditorView.frame.origin.y = getKeyboardHeight(notification) * -1
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        if memeEditorView.isBottomTextFieldBeingEditing() {
-            memeEditorView.frame.origin.y += getKeyboardHeight(notification)
-            
-        }
+            memeEditorView.frame.origin.y += 0
     }
     
     private func subscribeToKeyboardNotifications() {
