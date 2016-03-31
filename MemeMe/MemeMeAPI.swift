@@ -20,8 +20,16 @@ class MemeMeAPI: NSObject {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeMeAPI.setFont(_:)), name: "SetFontNotification", object: nil)
     }
     
-    func saveImage(meme: Meme) {
-        persistencyManager.saveImageLocally(meme.memedImage, fileName: "defaultName")
+    func saveMeme(meme: Meme) {
+        persistencyManager.saveMeme(meme)
+    }
+    
+    func deleteMeme(memeToDelete: Meme) {
+        persistencyManager.deleteMeme(memeToDelete)
+    }
+    
+    func getSavedMemes() -> [Meme] {
+        return persistencyManager.loadSavedMemes()
     }
     
     func getAvailableFonts() -> [String] {

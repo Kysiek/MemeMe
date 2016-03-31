@@ -13,9 +13,27 @@ class PersistencyManager {
     
     static let FONT_KEY = "fontKey"
     
-    func saveImageLocally(imageToSave: UIImage, fileName: String) {
-        //This method should save a given image
-        //It is no implemented yet, as there is no reason for it in the currect application version
+    private var memes: [Meme]!
+    
+    init() {
+        memes = [Meme]()
+    }
+    
+    func saveMeme(meme: Meme) {
+        if !checkMemeAlreadyContained(meme) {
+            memes.append(meme)
+        }
+    }
+    func deleteMeme(memeToDelete: Meme) {
+        for i in 0..<memes.count {
+            if memes[i] === memeToDelete {
+                memes.removeAtIndex(i)
+                return
+            }
+        }
+    }
+    func loadSavedMemes() -> [Meme] {
+        return memes
     }
     
     func loadFont() -> String? {
@@ -25,6 +43,15 @@ class PersistencyManager {
     
     func saveFont(font: String) {
         NSUserDefaults().setObject(font, forKey: PersistencyManager.FONT_KEY)
+    }
+    
+    private func checkMemeAlreadyContained(meme: Meme) -> Bool {
+        for i in 0..<memes.count {
+            if memes[i] === meme {
+                return true
+            }
+        }
+        return false
     }
     
 }

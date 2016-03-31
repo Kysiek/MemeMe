@@ -10,32 +10,37 @@ import UIKit
 
 class FontPickerTableViewDelegates: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    var dataSource: [String]?
+    var dataSource: [String]!
+    var filteredDataSource: [String]!
     
+    func filterDataSourceContaining(searchString: String) {
+        filteredDataSource = [String]()
+        for i in 0..<dataSource.count {
+            if searchString.isEmpty || dataSource[i].rangeOfString(searchString) != nil {
+                filteredDataSource.append(dataSource[i])
+            }
+        }
+    }
     
     @objc func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let dataSource = dataSource {
-            return dataSource.count
-        }
-        return 0
+        return filteredDataSource.count
     }
     
     @objc func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let fontCellView = tableView.dequeueReusableCellWithIdentifier("fontCell") as! FontCellView
-        if let font = dataSource?[indexPath.row] {
-            fontCellView.setFontPreview(font)
-            if(MemeMeAPI.sharedInstance.getFont() == font) {
-                fontCellView.accessoryType = UITableViewCellAccessoryType.Checkmark
-            } else {
-                fontCellView.accessoryType = UITableViewCellAccessoryType.None
-            }
+        let font = filteredDataSource[indexPath.row]
+        fontCellView.setFontPreview(font)
+        if(MemeMeAPI.sharedInstance.getFont() == font) {
+            fontCellView.accessoryType = UITableViewCellAccessoryType.Checkmark
+        } else {
+            fontCellView.accessoryType = UITableViewCellAccessoryType.None
         }
         return fontCellView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.cellForRowAtIndexPath(indexPath)?.setSelected(true, animated: true)
-        NSNotificationCenter.defaultCenter().postNotificationName("SetFontNotification", object: self, userInfo: ["font": dataSource![indexPath.row]])
+        NSNotificationCenter.defaultCenter().postNotificationName("SetFontNotification", object: self, userInfo: ["font": filteredDataSource[indexPath.row]])
         tableView.reloadData()
     }
 }

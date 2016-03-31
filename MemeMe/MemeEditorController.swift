@@ -8,16 +8,32 @@
 
 import UIKit
 
+
+protocol MemeEditorControllerDelegate: class {
+    func memeHasBeenEdited(meme: Meme)
+}
+
 class MemeEditorController: UIViewController, UINavigationControllerDelegate {
 
+    weak var delegate: MemeEditorControllerDelegate?
+    
     @IBOutlet var memeEditorView: MemeEditorView!
+    
+    var editingMeme: Meme?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         memeEditorView.delegate = self
-        memeEditorView.setInitialState()
         memeEditorView.initTextFields()
         subscribeToKeyboardNotifications()
+        
+        if let editingMeme = editingMeme {
+            memeEditorView.imageView.image = editingMeme.originalImage
+            memeEditorView.topTextField.text = editingMeme.topText
+            memeEditorView.bottomTextField.text = editingMeme.bottomText
+        } else {
+            memeEditorView.setInitialState()
+        }
         
         //add long press gesture
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MemeEditorController.showFontPickerView(_:)))
@@ -45,12 +61,13 @@ class MemeEditorController: UIViewController, UINavigationControllerDelegate {
     }
     @IBAction func cancelAllChanges(sender: AnyObject) {
         memeEditorView.setInitialState()
+        dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func shareMeme(sender: AnyObject) {
         let memedImage = memeEditorView.generateMemedImage()
         let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         presentViewController(activityController, animated: true, completion: {
-            MemeMeAPI.sharedInstance.saveImage(Meme(topText: self.memeEditorView.topTextField.text!, bottomText: self.memeEditorView.bottomTextField.text!, originalImage: self.memeEditorView.imageView.image!, memedImage: memedImage))
+            self.saveMeme(memedImage)
         })
     }
     func showFontPickerView(sender: UILongPressGestureRecognizer) {
@@ -94,13 +111,28 @@ class MemeEditorController: UIViewController, UINavigationControllerDelegate {
         imagePickerController.sourceType = sourceType
         presentViewController(imagePickerController, animated: true, completion: nil)
     }
+    
+    private func saveMeme(generatedImage: UIImage) {
+        if let editingMeme = editingMeme {
+            editingMeme.topText = self.memeEditorView.topTextField.text!
+            editingMeme.bottomText = self.memeEditorView.bottomTextField.text!
+            editingMeme.originalImage = self.memeEditorView.imageView.image!
+            editingMeme.memedImage = generatedImage
+        } else {
+            let generatedMeme = Meme(topText: self.memeEditorView.topTextField.text!,
+                                     bottomText: self.memeEditorView.bottomTextField.text!,
+                                     originalImage: self.memeEditorView.imageView.image!,
+                                     memedImage: generatedImage)
+            MemeMeAPI.sharedInstance.saveMeme(generatedMeme)
+        }
+    }
 
 }
 extension MemeEditorController: UIImagePickerControllerDelegate {
-
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage? {
             memeEditorView.imageChosen(originalImage)
+            
             dismissViewControllerAnimated(true, completion: nil)
         }
     }
